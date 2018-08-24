@@ -34,8 +34,8 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('gcloud') {
-          sh "gcloud container builds submit -t ${backendImageTag} ."
-          sh "gcloud container builds submit -t ${frontendImageTag} ."
+          sh "cd backend && gcloud builds submit -t ${backendImageTag} ."
+          sh "cd frontend && gcloud builds submit -t ${frontendImageTag} ."
         }
       }
     }
