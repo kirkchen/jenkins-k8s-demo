@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend-dev-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+        env: dev
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/jenkins-test-214312/backend:v1
+        ports:
+        - name: backend-port
+          containerPort: 8200

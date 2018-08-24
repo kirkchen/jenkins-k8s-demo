@@ -1,0 +1,13 @@
+{
+  "name": "jenkins-k8s-demo-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kirk Chen <rwk0119@yahoo.com.tw>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

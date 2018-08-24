@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+        env: production
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/jenkins-test-214312/backend:v1
+        ports:
+        - name: backend-port
+          containerPort: 8200
+      imagePullSecrets:
+      - name: registrykey
