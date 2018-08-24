@@ -45,8 +45,8 @@ spec:
       steps {
         container('kubectl') {
           // Change deployed image in canary to the one we just built
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/canary/*.yaml")
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/canary/*.yaml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/canary/*.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/canary/*.yml")
           sh("kubectl --namespace=production apply -f kubernetes/services/")
           sh("kubectl --namespace=production apply -f kubernetes/canary/")
         } 
@@ -58,8 +58,8 @@ spec:
       steps{
         container('kubectl') {
         // Change deployed image in canary to the one we just built
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/production/*.yaml")
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/production/*.yaml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/production/*.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/production/*.yml")
           sh("kubectl --namespace=production apply -f kubernetes/services/")
           sh("kubectl --namespace=production apply -f kubernetes/production/")
         }
@@ -76,9 +76,9 @@ spec:
           // Create namespace if it doesn't exist
           sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
           // Don't use public load balancing for development branches
-          sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./kubernetes/services/frontend.yaml")
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/dev/*.yaml")
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/dev/*.yaml")
+          sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./kubernetes/services/frontend.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/dev/*.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/dev/*.yml")
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/services/")
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/dev/")
           echo 'To access your environment run `kubectl proxy`'
