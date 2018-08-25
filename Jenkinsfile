@@ -95,7 +95,7 @@ spec:
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/service/")
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/dev/")
           echo 'To access your environment run `kubectl proxy`'
-          echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/frontend:8100/"
+          echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/sample:3000/"
         }
       }     
     }
