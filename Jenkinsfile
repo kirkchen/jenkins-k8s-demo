@@ -38,6 +38,7 @@ spec:
     stage('Test') {
       steps {
         container('node') {
+          sh "npm install"
           sh "npm test"
         }
       }
