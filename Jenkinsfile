@@ -55,7 +55,21 @@ spec:
         }
       }
     }
-    stage('Deploy') {
+    stage('Deploy Canary') {
+      // Canary branch
+      when { branch 'canary' }
+      steps {
+        container('kubectl') {
+          // Change deployed image in canary to the one we just built
+          sh("sed -i.bak 's#gcr.io/${project}/sample:v1#${imageTag}#' ./kubernetes/canary/*.yml")
+          sh("kubectl --namespace=production apply -f kubernetes/service/")
+          sh("kubectl --namespace=production apply -f kubernetes/canary/")
+        } 
+      }
+    }
+    stage('Deploy Production') {
+      // Production branch
+      when { branch 'master' }
       steps {
         container('kubectl') {
           // Change deployed image in canary to the one we just built
@@ -64,6 +78,26 @@ spec:
           sh("kubectl --namespace=production apply -f kubernetes/production/")
         } 
       }
+    }
+    stage('Deploy Dev') {
+      // Developer Branches
+      when { 
+        not { branch 'master' } 
+        not { branch 'canary' }
+      } 
+      steps {
+        container('kubectl') {
+          // Create namespace if it doesn't exist
+          sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
+          // Don't use public load balancing for development branches
+          sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./kubernetes/service/sample-service.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/sample:v1#${imageTag}#' ./kubernetes/dev/*.yml")
+          sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/service/")
+          sh("kubectl --namespace=${env.BRANCH_NAME} apply -f kubernetes/dev/")
+          echo 'To access your environment run `kubectl proxy`'
+          echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/frontend:8100/"
+        }
+      }     
     }
   }
 }

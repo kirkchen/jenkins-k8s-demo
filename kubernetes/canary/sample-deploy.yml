@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sample-dev-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sample
+        env: dev
+    spec:
+      containers:
+      - name: sample
+        image: gcr.io/jenkins-test-214312/sample:v1
+        ports:
+        - name: sample-port
+          containerPort: 3000
+      imagePullSecrets:
+      - name: registrykey
