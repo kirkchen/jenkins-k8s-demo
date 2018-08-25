@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: sample-dev-deployment
+  name: sample-canary-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: sample
-        env: dev
+        env: canary
     spec:
       containers:
       - name: sample
