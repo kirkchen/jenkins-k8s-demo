@@ -1,20 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: backend-canary-deployment
+  name: sample-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: backend
-        env: canary
+        app: sample
+        env: production
     spec:
       containers:
-      - name: backend
-        image: gcr.io/jenkins-test-214312/backend:v1
+      - name: sample
+        image: gcr.io/jenkins-test-214312/sample:v1
         ports:
-        - name: backend-port
-          containerPort: 8200
+        - name: sample-port
+          containerPort: 3000
       imagePullSecrets:
       - name: registrykey
