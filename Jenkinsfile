@@ -58,10 +58,9 @@ spec:
       steps {
         container('kubectl') {
           // Change deployed image in canary to the one we just built
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${backendImageTag}#' ./kubernetes/canary/*.yml")
-          sh("sed -i.bak 's#gcr.io/${project}/backend:v1#${frontendImageTag}#' ./kubernetes/canary/*.yml")
+          sh("sed -i.bak 's#gcr.io/${project}/sample:v1#${imageTag}#' ./kubernetes/production/*.yml")
           sh("kubectl --namespace=production apply -f kubernetes/service/")
-          sh("kubectl --namespace=production apply -f kubernetes/canary/")
+          sh("kubectl --namespace=production apply -f kubernetes/production/")
         } 
       }
     }
