@@ -17,7 +17,7 @@ spec:
   serviceAccountName: cd-jenkins
   containers:
   - name: node
-    image: node:8.4.11
+    image: node:8.11.4
     command:
     - cat
     tty: true
