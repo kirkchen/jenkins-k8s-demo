@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: sample
-        image: gcr.io/jenkins-test-214312/sample:v1
+        image: gcr.io/skilltree-kubernetes/sample:v1
         ports:
         - name: sample-port
           containerPort: 3000
