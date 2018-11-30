@@ -1,5 +1,5 @@
-def project = 'jenkins-test-214312'
-def  imageTag = "gcr.io/${project}/sample:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+def project = 'skilltree-kubernetes'
+def imageTag = "gcr.io/${project}/sample:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
   agent {
