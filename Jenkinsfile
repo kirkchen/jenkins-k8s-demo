@@ -60,6 +60,7 @@ spec:
       steps {
         container('kubectl') {
           // Change deployed image in canary to the one we just built
+          sh("kubectl get ns production || kubectl create ns production")
           sh("sed -i.bak 's#gcr.io/${project}/sample:v1#${imageTag}#' ./kubernetes/canary/*.yml")
           sh("kubectl --namespace=production apply -f kubernetes/service/")
           sh("kubectl --namespace=production apply -f kubernetes/canary/")
@@ -72,6 +73,7 @@ spec:
       steps {
         container('kubectl') {
           // Change deployed image in canary to the one we just built
+          sh("kubectl get ns production || kubectl create ns production")
           sh("sed -i.bak 's#gcr.io/${project}/sample:v1#${imageTag}#' ./kubernetes/production/*.yml")
           sh("kubectl --namespace=production apply -f kubernetes/service/")
           sh("kubectl --namespace=production apply -f kubernetes/production/")
