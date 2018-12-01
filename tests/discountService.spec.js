@@ -12,7 +12,7 @@ describe('Discount Service', () => {
     it('does 70% discount if price over 500', () => {
        // Arrange
        var price = 600;
-       var expected = 420;
+       var expected = 480;
        var actual = 0;
        
        // Act
